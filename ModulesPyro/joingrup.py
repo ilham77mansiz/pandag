@@ -2,7 +2,6 @@
 from Panda._func.decorators import Panda_cmd as ilhammansiz_on_cmd
 from Panda._func._helpers import edit_or_reply
 from . import HELP
-from Panda import pyrobot
 
 HELP(
     "joingrup",
@@ -10,8 +9,8 @@ HELP(
 
 import asyncio
 
-from pyrogram import filters, enums
-from pyrogram.errors import ChatAdminRequired, RPCError, FloodWait
+from pyrogram import enums
+from pyrogram.errors import FloodWait
 
 def get_arg(message):
     msg = message.text
