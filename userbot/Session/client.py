@@ -32,7 +32,7 @@ else:
     session2 = "PandaUserBot"
 try:
     bot2 = TelegramClient(
-        session=session,
+        session=session2,
         api_id=Var.API_ID,
         api_hash=Var.API_HASH,
         connection=ConnectionTcpAbridged,
@@ -51,7 +51,7 @@ else:
     session3 = "PandaUserBot"
 try:
     bot3 = TelegramClient(
-        session=session,
+        session=session3,
         api_id=Var.API_ID,
         api_hash=Var.API_HASH,
         connection=ConnectionTcpAbridged,
@@ -70,7 +70,7 @@ else:
     session4 = "PandaUserBot"
 try:
     bot4 = TelegramClient(
-        session=session,
+        session=session4,
         api_id=Var.API_ID,
         api_hash=Var.API_HASH,
         connection=ConnectionTcpAbridged,
@@ -91,7 +91,7 @@ else:
     session5 = "PandaUserBot"
 try:
     bot5 = TelegramClient(
-        session=session,
+        session=session5,
         api_id=Var.API_ID,
         api_hash=Var.API_HASH,
         connection=ConnectionTcpAbridged,
