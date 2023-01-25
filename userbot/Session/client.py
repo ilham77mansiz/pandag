@@ -51,7 +51,7 @@ except Exception as e:
 try:
     if SESSION3:
         session3 = StringSession(str(Var.SESSION3))
-        bot2 = TelegramClient(
+        bot3 = TelegramClient(
             session=session3,
             api_id=Var.API_ID,
             api_hash=Var.API_HASH,
