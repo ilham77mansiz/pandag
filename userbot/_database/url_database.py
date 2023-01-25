@@ -6,6 +6,7 @@
 # Recode by @robotrakitangakbagus, @diemmmmmmmmmm
 # Import PandaX_Userbot <https://github.com/ilhammansiz/PandaX_Userbot>
 # t.me/PandaUserbot & t.me/TeamSquadUserbotSupport
+
 import logging
 import ast
 import os
@@ -26,7 +27,7 @@ def where_hosted():
         return "github actions"
     if os.getenv("ANDROID_ROOT"):
         return "termux"
-    return "local"
+    return "[ local ]"
 
 
 HOSTED_ON = where_hosted()
@@ -39,14 +40,23 @@ if run_as_module:
 
 from ._var import Var
 
-psycopg2 = Database = None
-if Var.DATABASE_URL:
+
+
+Redis = MongoClient = Database = None
+if (Var.REDIS_URI or Var.REDISHOST):
     try:
-        import psycopg2
+        from redis import Redis
     except ImportError:
-        LOGS.info("Installing 'pyscopg2' for database.")
-        os.system("pip3 install -q psycopg2-binary")
-        import psycopg2
+        LOGS.info("Installing 'redis' for database.")
+        os.system("pip3 install -q redis hiredis")
+        from redis import Redis
+elif Var.MONGO_URI:
+    try:
+        from pymongo import MongoClient
+    except ImportError:
+        LOGS.info("Installing 'pymongo' for database.")
+        os.system("pip3 install -q pymongo[srv]")
+        from pymongo import MongoClient
 else:
     try:
         from .localdb import Database
@@ -54,8 +64,6 @@ else:
         LOGS.info("Using local file as database.")
         os.system("pip3 install -q localdb.json")
         from localdb import Database
-
-# --------------------------------------------------------------------------------------------- #
 
 
 class _BaseDatabase:
@@ -114,93 +122,107 @@ class _BaseDatabase:
         return 1
 
 
-# --------------------------------------------------------------------------------------------- #
 
-# Thanks to "Akash Pattnaik" / @BLUE-DEVIL1134
-# for SQL Implementation in Ultroid.
-#
-# Please use https://elephantsql.com/ !
+class MongoDB(_BaseDatabase):
+    def __init__(self, key, dbname="DatabaseCute"):
+        self.dB = MongoClient(key, serverSelectionTimeoutMS=5000)
+        self.db = self.dB[dbname]
+        super().__init__()
+
+    def __repr__(self):
+        return f"<Panda.MonGoDB\n -total_keys: {len(self.keys())}\n>"
+
+    @property
+    def name(self):
+        return "MongoDB"
+
+    @property
+    def usage(self):
+        return self.db.command("dbstats")["dataSize"]
+
+    def ping(self):
+        if self.dB.server_info():
+            return "MongoTrue"
+
+    def keys(self):
+        return self.db.list_collection_names()
+
+    def setdb(self, key, value):
+        if key in self.keys():
+            self.db[key].replace_one({"_id": key}, {"value": str(value)})
+        else:
+            self.db[key].insert_one({"_id": key, "value": str(value)})
+        self._cache.update({key: value})
+        return True
+
+    def delete(self, key):
+        self.db.drop_collection(key)
+
+    def get(self, key):
+        if x := self.db[key].find_one({"_id": key}):
+            return x["value"]
+
+    def flushall(self):
+        self.dB.drop_database("DatabaseCute")
+        self._cache.clear()
+        return True
 
 
-class SqlDB(_BaseDatabase):
-    def __init__(self, url):
-        self._url = url
-        self._connection = None
-        self._cursor = None
-        try:
-            self._connection = psycopg2.connect(dsn=url)
-            self._connection.autocommit = True
-            self._cursor = self._connection.cursor()
-            self._cursor.execute(
-                "CREATE TABLE IF NOT EXISTS Panda (pandaCli varchar(70))"
-            )
-        except Exception as error:
-            LOGS.exception(error)
-            LOGS.info("Invaid SQL Database")
-            if self._connection:
-                self._connection.close()
+
+class RedisDB(_BaseDatabase):
+    def __init__(
+        self,
+        host,
+        port,
+        password,
+        platform="",
+        logger=LOGS,
+        *args,
+        **kwargs,
+    ):
+        if host and ":" in host:
+            spli_ = host.split(":")
+            host = spli_[0]
+            port = int(spli_[-1])
+            if host.startswith("http"):
+                logger.error("Your REDIS_URI should not start with http !")
+                import sys
+
+                sys.exit()
+        elif not host or not port:
+            logger.error("Port Number not found")
+            import sys
+
             sys.exit()
+        kwargs["host"] = host
+        kwargs["password"] = password
+        kwargs["port"] = port
+
+        if platform.lower() == "qovery" and not host:
+            var, hash_, host, password = "", "", "", ""
+            for vars_ in os.environ:
+                if vars_.startswith("QOVERY_REDIS_") and vars.endswith("_HOST"):
+                    var = vars_
+            if var:
+                hash_ = var.split("_", maxsplit=2)[1].split("_")[0]
+            if hash:
+                kwargs["host"] = os.environ(f"QOVERY_REDIS_{hash_}_HOST")
+                kwargs["port"] = os.environ(f"QOVERY_REDIS_{hash_}_PORT")
+                kwargs["password"] = os.environ(f"QOVERY_REDIS_{hash_}_PASSWORD")
+        self.db = Redis(**kwargs)
+        self.set = self.db.set
+        self.get = self.db.get
+        self.keys = self.db.keys
+        self.delete = self.db.delete
         super().__init__()
 
     @property
     def name(self):
-        return "Database_SQL"
+        return "RedisDB"
 
     @property
     def usage(self):
-        self._cursor.execute(
-            "SELECT pg_size_pretty(pg_relation_size('Panda')) AS size"
-        )
-        data = self._cursor.fetchall()
-        return int(data[0][0].split()[0])
-
-    def keys(self):
-        self._cursor.execute(
-            "SELECT column_name FROM information_schema.columns WHERE table_schema = 'public' AND table_name  = 'panda'"
-        )  # case sensitive
-        data = self._cursor.fetchall()
-        return [_[0] for _ in data]
-
-    def get(self, variable):
-        try:
-            self._cursor.execute(f"SELECT {variable} FROM Panda")
-        except psycopg2.errors.UndefinedColumn:
-            return None
-        data = self._cursor.fetchall()
-        if not data:
-            return None
-        if len(data) >= 1:
-            for i in data:
-                if i[0]:
-                    return i[0]
-
-    def set(self, key, value):
-        try:
-            self._cursor.execute(f"ALTER TABLE Panda DROP COLUMN IF EXISTS {key}")
-        except (psycopg2.errors.UndefinedColumn, psycopg2.errors.SyntaxError):
-            pass
-        except BaseException as er:
-            LOGS.exception(er)
-        self._cache.update({key: value})
-        self._cursor.execute(f"ALTER TABLE Panda ADD {key} TEXT")
-        self._cursor.execute(f"INSERT INTO Panda ({key}) values (%s)", (str(value),))
-        return True
-
-    def delete(self, key):
-        try:
-            self._cursor.execute(f"ALTER TABLE Panda DROP COLUMN {key}")
-        except psycopg2.errors.UndefinedColumn:
-            return False
-        return True
-
-    def flushall(self):
-        self._cache.clear()
-        self._cursor.execute("DROP TABLE Panda")
-        self._cursor.execute(
-            "CREATE TABLE IF NOT EXISTS Panda (pandaCli varchar(70))"
-        )
-        return True
-
+        return sum(self.db.memory_usage(x) for x in self.keys())
 
 
 class LocalDB(_BaseDatabase):
@@ -212,21 +234,31 @@ class LocalDB(_BaseDatabase):
         return self._cache.keys()
 
     def __repr__(self):
-        return f"<DatabaseCute.LocalDB\n -total_keys: {len(self.keys())}\n>"
+        return f"<Panda.LocalDB\n -total_keys: {len(self.keys())}\n>"
 
 
 def DatabaseCute():
     _er = False
     try:
-        if psycopg2:
-            return SqlDB(Var.DATABASE_URL)
+        if Redis:
+            return RedisDB(
+                host=Var.REDIS_URI or Var.REDISHOST,
+                password=Var.REDIS_PASSWORD or Var.REDISPASSWORD,
+                port=Var.REDISPORT,
+                platform=HOSTED_ON,
+                decode_responses=True,
+                socket_timeout=5,
+                retry_on_timeout=True,
+            )
+        if MongoClient:
+            return MongoDB(Var.MONGO_URI)
     except BaseException as err:
         LOGS.exception(err)
         _er = True
     if not _er:
         LOGS.critical(
-            "No DB requirement fullfilled!\nPlease install sql dependencies...\nTill then using local file as database."
+            "No DB requirement fullfilled!\nPlease install redis, mongo or sql dependencies...\nTill then using local file as database."
         )
     if HOSTED_ON == "termux":
-        return HOSTED_ON
+        return LocalDB()
     exit()
