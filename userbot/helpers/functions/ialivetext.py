@@ -21,11 +21,11 @@ heroku_api = "https://api.heroku.com"
 from ._database import DatabaseCute
 DB = DatabaseCute()
 
-async def check_data_base_heal_th():
+def check_data_base_heal_th():
     try:
-        if (Var.REDIS_URI or Var.REDISHOST):
+        if not (Var.REDIS_URI or Var.REDISHOST):
             return "RedisDB"
-        if Var.MONGO_URI:
+        if not Var.MONGO_URI:
             return mongodb = "MongoDB"   
 
 async def pandaalive(StartTime):
