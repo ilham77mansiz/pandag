@@ -28,7 +28,7 @@ from ..Var import Config
 from ..helpers.utils.events import checking
 from ..helpers.utils.format import paste_text
 from ..helpers.utils.utils import runcmd
-from ..sql_helper import sqldb as SqL
+
 from . import BOT_INFO, CMD_INFO, GRP_INFO, LOADED_CMDS, PLG_INFO
 from .cmdinfo import _format_about
 from .data import _sudousers_list, blacklist_chats_list, sudo_enabled_cmds, _dev_list
@@ -37,6 +37,10 @@ from .fasttelethon import download_file, upload_file
 from .logger import logging
 from .managers import edit_delete
 from .pluginManager import restart_script
+
+from ._database import DatabaseCute
+DB = DatabaseCute()
+SqL = DB
 
 LOGS = logging.getLogger(__name__)
 
