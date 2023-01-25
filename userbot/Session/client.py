@@ -71,7 +71,7 @@ except Exception as e:
 try:
     if SESSION4:
         session4 = StringSession(str(Var.SESSION4))
-        bot2 = TelegramClient(
+        bot4 = TelegramClient(
             session=session4,
             api_id=Var.API_ID,
             api_hash=Var.API_HASH,
@@ -92,7 +92,7 @@ except Exception as e:
 try:
     if SESSION5:
         session5 = StringSession(str(Var.SESSION5))
-        bot2 = TelegramClient(
+        bot5 = TelegramClient(
             session=session5,
             api_id=Var.API_ID,
             api_hash=Var.API_HASH,
