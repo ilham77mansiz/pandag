@@ -24,9 +24,9 @@ DB = DatabaseCute()
 def check_data_base_heal_th():
     try:
         if (Var.REDIS_URI or Var.REDISHOST):
-            return redisdb = f"{DB.name}"
+            return "RedisDB"
         if Var.MONGO_URI:
-            return mongodb = f"{DB.name}"   
+            return mongodb = "MongoDB"   
 
 async def pandaalive(StartTime):
     _, check_sgnirts = check_data_base_heal_th()
