@@ -18,6 +18,8 @@ heroku_api = "https://api.heroku.com"
 # the "you can't use this for anything - public or private,
 # Panda
 
+from logging import getLogger
+LOGS = getLogger(__name__)
 from ._database import DatabaseCute
 DB = DatabaseCute()
 
@@ -27,6 +29,8 @@ def check_data_base_heal_th():
             return "RedisDB"
         if not Var.MONGO_URI:
             return mongodb = "MongoDB"   
+    except BaseException as err:
+        LOGS.exception(err)
 
 async def pandaalive(StartTime):
     _, check_sgnirts = check_data_base_heal_th()
