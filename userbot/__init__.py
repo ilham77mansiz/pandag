@@ -1,12 +1,19 @@
 from .Session import *
 from ._database import DatabaseCute
 DB = DatabaseCute()
+import logging
 
 
+LOGS = logging.getLogger("PandaUserbot")
+
+class UBOTConfig:
+    lang = "en"
+    thumb = "userbot/resources/ubotpanda.jpg"
 
 
-
-
+LOGS.info(f"Connecting to {DB.name}...")
+if DB.ping():
+    LOGS.info(f"Connected to {DB.name} Successfully!")
 
 
 
