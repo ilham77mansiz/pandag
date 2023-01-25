@@ -230,7 +230,7 @@ def mansiz_cmd(
     return decorator
 
 
-def man_handler(
+def panda_handler(
     **args,
 ):
     def decorator(func):
