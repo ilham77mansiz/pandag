@@ -6,7 +6,6 @@
 
 
 from telethon.sync import TelegramClient, custom, events
-from .sql_helper.globals import addgvar, delgvar, gvarstatus
 import heroku3
 from redis import StrictRedis
 
@@ -22,6 +21,9 @@ from .versions import __version__
 import logging
 from .versions import __version__, __license__, __author__, __copyright__
 from .helpers.filters import gen, regex
+addgvar = SqL.setdb
+delgvar = SqL.deldb
+gvarstatus = SqL.getdb
 
 DEVLIST = ublackdev.plist
 DEVS = DEVLIST
