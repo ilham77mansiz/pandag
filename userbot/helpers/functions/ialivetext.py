@@ -6,7 +6,7 @@ import time
 import heroku3
 import requests
 
-from ...Var import Config
+from ...Var import Config, Var
 from .utils import get_readable_time
 
 Heroku = heroku3.from_key(Config.HEROKU_API_KEY)
@@ -18,26 +18,15 @@ heroku_api = "https://api.heroku.com"
 # the "you can't use this for anything - public or private,
 # Panda
 
+from ._database import DatabaseCute
+DB = DatabaseCute()
 
 def check_data_base_heal_th():
-    # https://stackoverflow.com/a/41961968
-    is_database_working = False
-    output = "✧"
-    if not Config.DB_URI:
-        return is_database_working, output
-    from ...sql_helper import SESSION
-
     try:
-        # to check database we will execute raw query
-        SESSION.execute("SELECT 1")
-    except Exception as e:
-        output = f"❌ {str(e)}"
-        is_database_working = False
-    else:
-        output = "✧"
-        is_database_working = True
-    return is_database_working, output
-
+        if (Var.REDIS_URI or Var.REDISHOST):
+            return redisdb = {DB.name}
+        if Var.MONGO_URI:
+            return mongodb = {DB.name}   
 
 async def pandaalive(StartTime):
     _, check_sgnirts = check_data_base_heal_th()
