@@ -8,20 +8,21 @@ from telethon import TelegramClient
 from pytgcalls import PyTgCalls
 
 
-if SESSION:
-    session = StringSession(str(Var.SESSION))
-else:
-    session = "PandaUserBot"
 try:
-    bot = TelegramClient(
-        session=session,
-        api_id=Var.API_ID,
-        api_hash=Var.API_HASH,
-        connection=ConnectionTcpAbridged,
-        auto_reconnect=True,
-        connection_retries=None,
-    )
-    call_py = PyTgCalls(bot)
+    if SESSION:
+        session = StringSession(str(Var.SESSION))
+        bot = TelegramClient(
+            session=session,
+            api_id=Var.API_ID,
+            api_hash=Var.API_HASH,
+            connection=ConnectionTcpAbridged,
+            auto_reconnect=True,
+            connection_retries=None,
+        )
+        call_py = PyTgCalls(bot)
+    else:
+        bot = None
+        call_py = None
 except Exception as e:
     print(f"STRING_SESSION - {e}")
     sys.exit()
