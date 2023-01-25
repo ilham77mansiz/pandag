@@ -50,7 +50,7 @@ except Exception as e:
 
 try:
     if SESSION3:
-        session2 = StringSession(str(Var.SESSION3))
+        session3 = StringSession(str(Var.SESSION3))
         bot2 = TelegramClient(
             session=session3,
             api_id=Var.API_ID,
@@ -70,7 +70,7 @@ except Exception as e:
 
 try:
     if SESSION4:
-        session2 = StringSession(str(Var.SESSION4))
+        session4 = StringSession(str(Var.SESSION4))
         bot2 = TelegramClient(
             session=session4,
             api_id=Var.API_ID,
@@ -91,7 +91,7 @@ except Exception as e:
 
 try:
     if SESSION5:
-        session2 = StringSession(str(Var.SESSION5))
+        session5 = StringSession(str(Var.SESSION5))
         bot2 = TelegramClient(
             session=session5,
             api_id=Var.API_ID,
