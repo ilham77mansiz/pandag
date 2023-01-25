@@ -21,7 +21,7 @@ heroku_api = "https://api.heroku.com"
 from ._database import DatabaseCute
 DB = DatabaseCute()
 
-def check_data_base_heal_th():
+async def check_data_base_heal_th():
     try:
         if (Var.REDIS_URI or Var.REDISHOST):
             return "RedisDB"
