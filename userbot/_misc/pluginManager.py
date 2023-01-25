@@ -12,11 +12,8 @@ import sys
 from telethon import TelegramClient
 
 import logging
-from ..sql_helper.global_collection import (
-    add_to_collectionlist,
-    del_keyword_collectionlist,
-    get_collectionlist_items,
-)
+from .._database import DatabaseCute
+DB = DatabaseCute()
 
 package_patern = re.compile(r"([\w-]+)(?:=|<|>|!)")
 github_patern = re.compile(r"(?:https?)?(?:www.)?(?:github.com/)?([\w\-.]+/[\w\-.]+)/?")
@@ -71,14 +68,13 @@ def run_async(func: callable):
 async def restart_script(client: TelegramClient, ilham):
     """Restart the current script."""
     try:
-        ulist = get_collectionlist_items()
-        for i in ulist:
-            if i == "restart_update":
-                del_keyword_collectionlist("restart_update")
+        ulist = DB.getdb("restart_update")
+        if ulist:
+            DB.deldb("restart_update")
     except Exception as e:
         LOGS.error(e)
     try:
-        add_to_collectionlist("restart_update", [ilham.chat_id, ilham.id])
+        DB.setdb("restart_update", [ilham.chat_id, ilham.id])
     except Exception as e:
         LOGS.error(e)
     executable = sys.executable.replace(" ", "\\ ")
