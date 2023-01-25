@@ -30,6 +30,10 @@ class Var:
     API_ID = int(getenv("API_ID", ""))
     API_HASH = getenv("API_HASH")
     SESSION = sys.argv[3] if len(sys.argv) > 3 else getenv("SESSION", None)
+    SESSION2 = getenv("SESSION2", None)
+    SESSION3 = getenv("SESSION3", None)
+    SESSION4 = getenv("SESSION4", None)
+    SESSION5 = getenv("SESSION5", None)
     REDIS_URI = getenv("REDIS_URI", None)
     REDIS_PASSWORD = getenv("REDIS_PASSWORD", None)
     # extras
@@ -169,11 +173,11 @@ TG_VIDEO_FILESIZE_LIMIT = int(
 
 
 # You'll need a Pyrogram String Session for these vars. Generate String from our session generator bot
-STRING1 = getenv("STRING_SESSION", None)
-STRING2 = getenv("STRING_SESSION2", None)
-STRING3 = getenv("STRING_SESSION3", None)
-STRING4 = getenv("STRING_SESSION4", None)
-STRING5 = getenv("STRING_SESSION5", None)
+STRING1 = getenv("PyroSESSION", None)
+STRING2 = getenv("PyroSESSION2", None)
+STRING3 = getenv("PyroSESSION3", None)
+STRING4 = getenv("PyroSESSION4", None)
+STRING5 = getenv("PyroSESSION5", None)
 
 BANNED_USERS = filters.user()
 YTDOWNLOADER = 1
