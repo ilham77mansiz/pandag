@@ -1,9 +1,11 @@
-# Ultroid - UserBot
 # Copyright (C) 2021-2022 TeamUltroid
-#
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
+
+# Recode by @robotrakitangakbagus, @diemmmmmmmmmm
+# Import PandaX_Userbot <https://github.com/ilhammansiz/PandaX_Userbot>
+# t.me/PandaUserbot & t.me/TeamSquadUserbotSupport
 
 import asyncio
 import math
@@ -18,7 +20,7 @@ from urllib.request import urlretrieve
 from .. import run_as_module
 
 if run_as_module:
-    from ..configs import Var
+    from ..config import Var
 
 
 try:
@@ -58,9 +60,9 @@ from .._misc._wrappers import eod, eor
 from . import *
 
 if run_as_module:
-    from ..dB._core import ADDONS, HELP, LIST, LOADED
+    from .._database._core import ADDONS, HELP, LIST, LOADED
 
-from ..version import ultroid_version
+from ..version import panda_version
 from .FastTelethon import download_file as downloadable
 from .FastTelethon import upload_file as uploadable
 
@@ -77,7 +79,7 @@ def run_async(function):
 
 
 # ~~~~~~~~~~~~~~~~~~~~ small funcs ~~~~~~~~~~~~~~~~~~~~ #
-
+ultroid_version = panda_version
 
 def make_mention(user, custom=None):
     if user.username:
@@ -102,11 +104,11 @@ def inline_mention(user, custom=None, html=False):
 
 
 def un_plug(shortname):
-    from .. import asst, ultroid_bot
+    from .. import asst, bot
 
     try:
         all_func = LOADED[shortname]
-        for client in [ultroid_bot, asst]:
+        for client in [bot, asst]:
             for x, _ in client.list_event_handlers():
                 if x in all_func:
                     client.remove_event_handler(x)
@@ -115,7 +117,7 @@ def un_plug(shortname):
         ADDONS.remove(shortname)
     except (ValueError, KeyError):
         name = f"addons.{shortname}"
-        for client in [ultroid_bot, asst]:
+        for client in [bot, asst]:
             for i in reversed(range(len(client._event_builders))):
                 ev, cb = client._event_builders[i]
                 if cb.__module__ == name:
@@ -132,7 +134,7 @@ if run_as_module:
 
     async def safeinstall(event):
         from .. import HNDLR
-        from ..startup.utils import load_addons
+        from .._extra.utils import load_addons
 
         if not event.reply_to:
             return await eod(
@@ -170,12 +172,12 @@ if run_as_module:
             output = "**Plugin** - `{}`\n".format(plug)
             for i in HELP[plug]:
                 output += i
-            output += "\n© @TeamUltroid"
-            await eod(ok, f"✓ `Ultroid - Installed`: `{plug}` ✓\n\n{output}")
+            output += "\n© @PandaUserbot"
+            await eod(ok, f"✓ `Panda Userbot - Installed`: `{plug}` ✓\n\n{output}")
         elif plug in CMD_HELP:
             output = f"Plugin Name-{plug}\n\n✘ Commands Available-\n\n"
             output += str(CMD_HELP[plug])
-            await eod(ok, f"✓ `Ultroid - Installed`: `{plug}` ✓\n\n{output}")
+            await eod(ok, f"✓ `Panda Userbot - Installed`: `{plug}` ✓\n\n{output}")
         else:
             try:
                 x = f"Plugin Name-{plug}\n\n✘ Commands Available-\n\n"
@@ -205,16 +207,16 @@ if run_as_module:
             )
         await xx.edit("`Downloading Logs...`")
         ok = app.get_log()
-        with open("ultroid-heroku.log", "w") as log:
+        with open("panda-heroku.log", "w") as log:
             log.write(ok)
         await event.client.send_file(
             event.chat_id,
-            file="ultroid-heroku.log",
-            thumb=ULTConfig.thumb,
-            caption="**Ultroid Heroku Logs.**",
+            file="panda-heroku.log",
+            thumb=PDConfig.thumb,
+            caption="**Panda Heroku Logs.**",
         )
 
-        os.remove("ultroid-heroku.log")
+        os.remove("panda-heroku.log")
         await xx.delete()
 
     async def def_logs(ult, file):
@@ -579,13 +581,13 @@ async def restart(ult=None):
             LOGS.exception(er)
     else:
         if len(sys.argv) == 1:
-            os.execl(sys.executable, sys.executable, "-m", "pyUltroid")
+            os.execl(sys.executable, sys.executable, "-m", "userbot")
         else:
             os.execl(
                 sys.executable,
                 sys.executable,
                 "-m",
-                "pyUltroid",
+                "userbot",
                 sys.argv[1],
                 sys.argv[2],
                 sys.argv[3],
