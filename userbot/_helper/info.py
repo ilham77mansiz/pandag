@@ -10,7 +10,7 @@
 
 import math
 
-from ..exceptions import TelethonMissingError
+from .exceptions import TelethonMissingError
 
 try:
     from telethon.tl import functions, types
