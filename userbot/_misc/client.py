@@ -345,7 +345,7 @@ class PandaUserbotSession(TelegramClient):
                             ),
                         )
                 if allow_sudo and SqL.getdb("sudoenable") is not None:
-                    if command is None or command[0] in sudo_enabledcmds:
+                    if command is None or command[0]:
                         if edited:
                             PandaBot.add_event_handler(
                                 wrapper,
@@ -648,7 +648,7 @@ class PandaUserbotSession(TelegramClient):
                             ),
                         )
                 if allow_sudo and SqL.getdb("sudoenable") is not None:
-                    if command is None or command[0] in sudo_enabledcmds:
+                    if command is None or command[0]:
                         if edited:
                             PandaBot.add_event_handler(
                                 wrapper,
