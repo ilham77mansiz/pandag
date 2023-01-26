@@ -24,14 +24,11 @@ from ._database import DatabaseCute
 DB = DatabaseCute()
 
 def check_data_base_heal_th():
-    try:
-        if not (Var.REDIS_URI or Var.REDISHOST):
-            return "RedisDB"
-        if not Var.MONGO_URI:
-            return "MongoDB"   
-    except Exception as err:
-        LOGS.exception(err)
-
+    if not (Var.REDIS_URI or Var.REDISHOST):
+        return "RedisDB"
+    if not Var.MONGO_URI:
+        return "MongoDB"   
+    
 async def pandaalive(StartTime):
     _, check_sgnirts = check_data_base_heal_th()
     sudo = "Enabled" if Config.SUDO_USERS else "Disabled"
