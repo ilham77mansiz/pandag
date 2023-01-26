@@ -20,7 +20,7 @@ heroku_api = "https://api.heroku.com"
 
 from logging import getLogger
 LOGS = getLogger(__name__)
-from ._database import DatabaseCute
+from ..._database import DatabaseCute
 DB = DatabaseCute()
 
 def check_data_base_heal_th():
