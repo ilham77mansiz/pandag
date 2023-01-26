@@ -53,7 +53,7 @@ from telethon.helpers import _maybe_await
 from telethon.tl import types
 from telethon.utils import get_display_name
 
-from ..exceptions import DependencyMissingError
+from .exceptions import DependencyMissingError
 
 from .._misc import CMD_HELP
 from .._misc._wrappers import eod, eor
@@ -222,8 +222,8 @@ if run_as_module:
     async def def_logs(ult, file):
         await ult.respond(
             file=file,
-            thumb=ULTConfig.thumb,
-            caption="**Ultroid Logs.**",
+            thumb=PDConfig.thumb,
+            caption="**PandaUserbot Logs.**",
         )
 
     async def updateme_requirements():
@@ -240,8 +240,8 @@ if run_as_module:
         )
         ac_br = repo.active_branch.name
         ch_log = tldr_log = ""
-        ch = f"<b>Ultroid {ultroid_version} updates for <a href={UPSTREAM_REPO_URL}/tree/{ac_br}>[{ac_br}]</a>:</b>"
-        ch_tl = f"Ultroid {ultroid_version} updates for {ac_br}:"
+        ch = f"<b>Panda {panda_version} updates for <a href={UPSTREAM_REPO_URL}/tree/{ac_br}>[{ac_br}]</a>:</b>"
+        ch_tl = f"Panda {panda_version} updates for {ac_br}:"
         d_form = "%d/%m/%y || %H:%M"
         for c in repo.iter_commits(diff):
             ch_log += f"\n\n💬 <b>{c.count()}</b> 🗓 <b>[{c.committed_datetime.strftime(d_form)}]</b>\n<b><a href={UPSTREAM_REPO_URL.rstrip('/')}/commit/{c}>[{c.summary}]</a></b> 👨‍💻 <code>{c.author}</code>"
