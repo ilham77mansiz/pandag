@@ -37,11 +37,9 @@ from .fasttelethon import download_file, upload_file
 from .logger import logging
 from .managers import edit_delete
 from .pluginManager import restart_script
-
 from .._database import DatabaseCute
 DB = DatabaseCute()
 SqL = DB
-
 LOGS = logging.getLogger(__name__)
 
 
@@ -76,17 +74,18 @@ sudo_enabledcmds = sudo_enabled_cmds()
 
 class PandaUserbotSession(TelegramClient):
     def ilhammansiz_cmd(
+        self: TelegramClient,
         pattern: str or tuple = None,
         info: Union[str, Dict[str, Union[str, List[str], Dict[str, str]]]]
         or tuple = None,
-        groups_only: False,
-        private_only: False,
-        allow_sudo: True,
-        dev: True,
-        dual: False,
-        edited: True,
+        groups_only: bool = False,
+        private_only: bool = False,
+        allow_sudo: bool = True,
+        dev: bool = True,
+        dual: bool = False,
+        edited: bool = True,
         forword=False,
-        disable_errors: False,
+        disable_errors: bool = False,
         command: str or tuple = None,
         **kwargs,
     ) -> callable:  # sourcery no-metrics
@@ -379,17 +378,18 @@ class PandaUserbotSession(TelegramClient):
         return decorator
 
     def register(
+        self: TelegramClient,
         pattern: str or tuple = None,
         help: Union[str, Dict[str, Union[str, List[str], Dict[str, str]]]]
         or tuple = None,
-        groups_only: False,
-        private_only: False,
-        allow_sudo: True,
-        dev: True,
-        dual: False,
-        edited: True,
+        groups_only: bool = False,
+        private_only: bool = False,
+        allow_sudo: bool = True,
+        dev: bool = True,
+        dual: bool = False,
+        edited: bool = True,
         forword=False,
-        disable_errors: False,
+        disable_errors: bool = False,
         command: str or tuple = None,
         **kwargs,
     ) -> callable:  # sourcery no-metrics
@@ -682,8 +682,9 @@ class PandaUserbotSession(TelegramClient):
 
 
     def bot_cmd(
-        disable_errors: False,
-        edited: False,
+        self: TelegramClient,
+        disable_errors: bool = False,
+        edited: bool = False,
         **kwargs,
     ) -> callable:  # sourcery no-metrics
         kwargs["func"] = kwargs.get("func", lambda e: e.via_bot_id is None)
