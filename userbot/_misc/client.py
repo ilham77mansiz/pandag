@@ -80,14 +80,14 @@ class PandaUserbotSession(TelegramClient):
         pattern: str or tuple = None,
         info: Union[str, Dict[str, Union[str, List[str], Dict[str, str]]]]
         or tuple = None,
-        groups_only: = False,
-        private_only: = False,
-        allow_sudo: = True,
-        dev: = True,
-        dual: = False,
-        edited: = True,
+        groups_only: False,
+        private_only: False,
+        allow_sudo: True,
+        dev: True,
+        dual: False,
+        edited: True,
         forword=False,
-        disable_errors: = False,
+        disable_errors: False,
         command: str or tuple = None,
         **kwargs,
     ) -> callable:  # sourcery no-metrics
@@ -384,14 +384,14 @@ class PandaUserbotSession(TelegramClient):
         pattern: str or tuple = None,
         help: Union[str, Dict[str, Union[str, List[str], Dict[str, str]]]]
         or tuple = None,
-        groups_only: = False,
-        private_only: = False,
-        allow_sudo: = True,
-        dev: = True,
-        dual: = False,
-        edited: = True,
+        groups_only: False,
+        private_only: False,
+        allow_sudo: True,
+        dev: True,
+        dual: False,
+        edited: True,
         forword=False,
-        disable_errors: = False,
+        disable_errors: False,
         command: str or tuple = None,
         **kwargs,
     ) -> callable:  # sourcery no-metrics
@@ -685,8 +685,8 @@ class PandaUserbotSession(TelegramClient):
 
     def bot_cmd(
         self: TelegramClient,
-        disable_errors: = False,
-        edited: = False,
+        disable_errors: False,
+        edited: False,
         **kwargs,
     ) -> callable:  # sourcery no-metrics
         kwargs["func"] = kwargs.get("func", lambda e: e.via_bot_id is None)
