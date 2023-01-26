@@ -1,9 +1,12 @@
-# Ultroid - UserBot
 # Copyright (C) 2021-2022 TeamUltroid
-#
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
+
+# Recode by @robotrakitangakbagus, @diemmmmmmmmmm
+# Import PandaX_Userbot <https://github.com/ilhammansiz/PandaX_Userbot>
+# t.me/PandaUserbot & t.me/TeamSquadUserbotSupport
+
 
 from .. import *  # ignore: pylint
 
