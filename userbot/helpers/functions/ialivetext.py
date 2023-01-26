@@ -28,8 +28,8 @@ def check_data_base_heal_th():
         if not (Var.REDIS_URI or Var.REDISHOST):
             return "RedisDB"
         if not Var.MONGO_URI:
-            return mongodb = "MongoDB"   
-    except BaseException as err:
+            return "MongoDB"   
+    except Exception as err:
         LOGS.exception(err)
 
 async def pandaalive(StartTime):
