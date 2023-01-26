@@ -30,7 +30,7 @@ def _users_list():
 
 def blacklist_chats_list():
     blacklistchats = DB.getdb("blacklist_chats_list")
-    return sudousers or {int(x) for x in os.environ.get("blacklist_chats_list", "").split()}
+    return blacklistchats or {int(x) for x in os.environ.get("blacklist_chats_list", "").split()}
 
 
     
