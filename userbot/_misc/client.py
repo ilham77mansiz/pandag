@@ -38,7 +38,7 @@ from .logger import logging
 from .managers import edit_delete
 from .pluginManager import restart_script
 
-from ._database import DatabaseCute
+from .._database import DatabaseCute
 DB = DatabaseCute()
 SqL = DB
 
