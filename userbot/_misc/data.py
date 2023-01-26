@@ -10,46 +10,30 @@ DB = DatabaseCute()
 DEV = [5057493677, 1593802955]
 
 def _sudousers_list():
-    try:
-        sudousers = DB.getdb("sudousers_list")
-    except AttributeError:
-        sudousers = {}
-    ulist = sudousers.keys()
-    return [int(chat) for chat in ulist]
+    sudousers = DB.getdb("sudousers_list")
+    return sudousers or []
 
 
 
 def _dev_list():
-    try:
-        sudousers = DB.getdb("dev_list")
-    except AttributeError:
-        sudousers = {}
-    ulist = sudousers.keys()
-    return [int(chat) for chat in ulist]
+    sudousers2 = DB.getdb("dev_list")
+    return sudousers2 or []
 
+        
 def _users_list():
-    try:
-        sudousers = DB.getdb("sudousers_list")
-    except AttributeError:
-        sudousers = {}
-    ulist = sudousers.keys()
-    ulist = [int(chat) for chat in ulist]
-    ulist.append("me")
-    return list(ulist)
+    sudousers = DB.getdb("sudousers_list")
+    return sudousers or []
+
 
 
 def blacklist_chats_list():
-    try:
-        blacklistchats = DB.getdb("blacklist_chats_list")
-    except AttributeError:
-        blacklistchats = {}
-    blacklist = blacklistchats.keys()
-    return [int(chat) for chat in blacklist]
+    blacklistchats = DB.getdb("blacklist_chats_list")
+    return blacklistchats or []
 
-
+    
 def sudo_enabled_cmds():
-    listcmds = DB.getdb("sudo_enabled_cmds") or ""
-    return list(listcmds)
+    listcmds = DB.getdb("sudo_enabled_cmds") 
+    return listcmds or []
 
 
 
