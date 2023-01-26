@@ -29,14 +29,14 @@ from ..Var import CMD_LIST, XTRA_CMD_LIST, Config
 def Panda_cmd(
     cmd: list,
     group: int = 0,
-    pm_only: bool = False,
-    group_only: bool = False,
-    chnnl_only: bool = False,
-    only_if_admin: bool = False,
-    ignore_errors: bool = False,
-    propagate_to_next_handler: bool = True,
+    pm_only: False,
+    group_only: False,
+    chnnl_only: False,
+    only_if_admin: False,
+    ignore_errors: False,
+    propagate_to_next_handler: True,
     file_name: str = None,
-    is_official: bool = True,
+    is_official: True,
     cmd_help: dict = {"help": "No One One Gonna Help You", "example": "{ch}what"},
 ):
     """- Main Decorator To Register Commands. -"""
@@ -216,14 +216,14 @@ def add_handler(filter_s, func_, cmd):
 def ilhammansiz_cmd(
     cmd: list,
     group: int = 0,
-    pm_only: bool = False,
-    group_only: bool = False,
-    chnnl_only: bool = False,
-    only_if_admin: bool = False,
-    ignore_errors: bool = False,
-    propagate_to_next_handler: bool = True,
+    pm_only: False,
+    group_only: False,
+    chnnl_only: False,
+    only_if_admin: False,
+    ignore_errors: False,
+    propagate_to_next_handler: = True,
     file_name: str = None,
-    is_official: bool = True,
+    is_official: = True,
     cmd_help: dict = {"help": "No One One Gonna Help You", "example": "{ch}what"},
 ):
     """- Main Decorator To Register Commands. -"""
