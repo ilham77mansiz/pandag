@@ -76,7 +76,6 @@ sudo_enabledcmds = sudo_enabled_cmds()
 
 class PandaUserbotSession(TelegramClient):
     def ilhammansiz_cmd(
-        self: TelegramClient,
         pattern: str or tuple = None,
         info: Union[str, Dict[str, Union[str, List[str], Dict[str, str]]]]
         or tuple = None,
@@ -380,7 +379,6 @@ class PandaUserbotSession(TelegramClient):
         return decorator
 
     def register(
-        self: TelegramClient,
         pattern: str or tuple = None,
         help: Union[str, Dict[str, Union[str, List[str], Dict[str, str]]]]
         or tuple = None,
@@ -684,7 +682,6 @@ class PandaUserbotSession(TelegramClient):
 
 
     def bot_cmd(
-        self: TelegramClient,
         disable_errors: False,
         edited: False,
         **kwargs,
