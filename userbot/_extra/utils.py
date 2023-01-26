@@ -19,7 +19,7 @@ def load_addons(plugin_name):
     from .._misc import _supporter as xxx
     from userbot import _helper
     from .._misc._assistant import asst_cmd, callback, in_pattern
-    from .._misc._decorators import ultroid_cmd
+    from .._misc._decorators import mansiz_cmd
     from .._misc._supporter import Config, admin_cmd, sudo_cmd
     from .._misc._wrappers import eod, eor
     from ..config import Var
