@@ -27,7 +27,7 @@ from ..helpers.functions.utube import (
     result_formatter,
     ytsearch_data,
 )
-from ..sql_helper.globals import gvarstatus
+gvarstatus = SqL.getdb
 from . import CMD_INFO, GRP_INFO, PLG_INFO, check_owner
 from .logger import logging
 
