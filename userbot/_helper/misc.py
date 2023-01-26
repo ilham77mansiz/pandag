@@ -14,7 +14,7 @@ from logging import WARNING
 from random import choice, randrange, shuffle
 from traceback import format_exc
 
-from pyUltroid.exceptions import DependencyMissingError
+from .exceptions import DependencyMissingError
 
 try:
     from aiohttp import ContentTypeError
@@ -28,8 +28,8 @@ from .. import *
 from .._misc._wrappers import eor
 
 if run_as_module:
-    from ..dB import DEVLIST
-    from ..dB._core import LIST
+    from .DEV import DEVLIST
+    from .._database._core import LIST
 
 from . import some_random_headers
 from .helper import async_searcher
@@ -61,7 +61,7 @@ except ImportError:
 
 
 async def randomchannel(
-    tochat, channel, range1, range2, caption=None, client=ultroid_bot
+    tochat, channel, range1, range2, caption=None, client=bot
 ):
     do = randrange(range1, range2)
     async for x in client.iter_messages(channel, add_offset=do, limit=1):
@@ -158,7 +158,7 @@ async def allcmds(event, telegraph):
             txt += HNDLR + zz + "\n"
         txt += "\n\n"
     t = telegraph.create_page(title="Ultroid All Cmds", content=[txt])
-    await eor(event, f"All Ultroid Cmds : [Click Here]({t['url']})", link_preview=False)
+    await eor(event, f"All Panda Cmds : [Click Here]({t['url']})", link_preview=False)
 
 
 async def ReTrieveFile(input_file_name):
