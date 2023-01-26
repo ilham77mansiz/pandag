@@ -15,15 +15,15 @@ def load_addons(plugin_name):
     base_name = plugin_name.split("/")[-1].split("\\")[-1].replace(".py", "")
     if base_name.startswith("__"):
         return
-    from .. import HNDLR, LOGS, asst, udB, ultroid_bot
+    from .. import HNDLR, LOGS, asst, udB, bot
     from .._misc import _supporter as xxx
-    from pyUltroid import fns
+    from userbot import _helper
     from .._misc._assistant import asst_cmd, callback, in_pattern
     from .._misc._decorators import ultroid_cmd
     from .._misc._supporter import Config, admin_cmd, sudo_cmd
     from .._misc._wrappers import eod, eor
-    from ..configs import Var
-    from ..dB._core import HELP
+    from ..config import Var
+    from .._database._core import HELP
 
     name = plugin_name.replace("/", ".").replace("\\", ".").replace(".py","")
     spec = util.spec_from_file_location(name, plugin_name)
@@ -32,14 +32,14 @@ def load_addons(plugin_name):
     mod.udB = udB
     mod.asst = asst
     mod.tgbot = asst
-    mod.ultroid_bot = ultroid_bot
-    mod.ub = ultroid_bot
-    mod.bot = ultroid_bot
-    mod.ultroid = ultroid_bot
-    mod.borg = ultroid_bot
-    mod.telebot = ultroid_bot
-    mod.jarvis = ultroid_bot
-    mod.friday = ultroid_bot
+    mod.ultroid_bot = bot
+    mod.ub = bot
+    mod.bot = bot
+    mod.ultroid = bot
+    mod.borg = bot
+    mod.telebot = bot
+    mod.jarvis = bot
+    mod.friday = bot
     mod.eod = eod
     mod.edit_delete = eod
     mod.LOGS = LOGS
@@ -53,8 +53,8 @@ def load_addons(plugin_name):
     mod.eor = eor
     mod.edit_or_reply = eor
     mod.asst_cmd = asst_cmd
-    mod.ultroid_cmd = ultroid_cmd
-    mod.on_cmd = ultroid_cmd
+    mod.ultroid_cmd = mansiz_cmd
+    mod.on_cmd = mansiz_cmd
     mod.callback = callback
     mod.Redis = udB.get_key
     mod.admin_cmd = admin_cmd
@@ -75,7 +75,7 @@ def load_addons(plugin_name):
     modules["fridaybot.utils"] = xxx
     modules["fridaybot.Config"] = xxx
     modules["userbot.uniborgConfig"] = xxx
-    modules["pyUltroid.functions"] = fns
+    modules["userbot.functions"] = _helper
     spec.loader.exec_module(mod)
     modules[name] = mod
     doc = modules[name].__doc__.format(i=HNDLR) if modules[name].__doc__ else ""
